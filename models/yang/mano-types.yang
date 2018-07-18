@@ -78,6 +78,12 @@ module mano-types
         type string;
       }
 
+      leaf data-type {
+        description
+            "Data type associated with the value.";
+        type manotypes:parameter-data-type;
+      }
+
       leaf value {
         description
             "Value associated with the name.";

@@ -16,8 +16,8 @@
 # NOTE: pyang and pyangbind are required for build
 
 PYANG:= pyang
-PYBINDPLUGIN:=$(shell /usr/bin/env python -c \
-	            'import pyangbind; import os; print "%s/plugin" % os.path.dirname(pyangbind.__file__)')
+PYBINDPLUGIN:=$(shell /usr/bin/env python3 -c \
+	            'import pyangbind; import os; print("{}/plugin".format(os.path.dirname(pyangbind.__file__)))')
 
 YANG_DESC_MODELS := vnfd nsd
 YANG_RECORD_MODELS := vnfr nsr
@@ -84,16 +84,23 @@ $(RW_PB_EXT):
 
 package:
 	tox -e build
+	tox -e build3
 
 pyangbind: pyang
 	git clone https://github.com/alf-tierno/pyangbind
-	cd pyangbind; git checkout issue151; python setup.py --command-packages=stdeb.command bdist_deb; cd ..
+	cd pyangbind; git checkout issue151; \
+       python setup.py --command-packages=stdeb.command bdist_deb; \
+       python3 setup.py --command-packages=stdeb.command bdist_deb; \
+       cd ..
 	mkdir -p deb_dist
 	cp pyangbind/deb_dist/*.deb deb_dist
 
 pyang:
 	git clone https://github.com/mbj4668/pyang
-	cd pyang; python setup.py --command-packages=stdeb.command bdist_deb; cd ..
+	cd pyang; \
+       python setup.py --command-packages=stdeb.command bdist_deb;  \
+       python3 setup.py --command-packages=stdeb.command bdist_deb;  \
+       cd ..
 	mkdir -p deb_dist
 	cp pyang/deb_dist/*.deb deb_dist
 

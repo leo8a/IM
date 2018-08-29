@@ -17,8 +17,8 @@
 FROM ubuntu:16.04
 
 RUN  apt-get update && \
-  DEBIAN_FRONTEND=noninteractive apt-get -y install git make wget python python-pip debhelper tox && \
-  DEBIAN_FRONTEND=noninteractive pip install pip==9.0.3 && \
-  DEBIAN_FRONTEND=noninteractive pip install -U pyang pyangbind && \
-  DEBIAN_FRONTEND=noninteractive pip install -U stdeb
-
+  DEBIAN_FRONTEND=noninteractive apt-get -y install git make wget python python3 python3-all python3-pip python-pip debhelper tox python-setuptools python3-setuptools && \
+  DEBIAN_FRONTEND=noninteractive pip3 install pip==9.0.3 && \
+  DEBIAN_FRONTEND=noninteractive pip3 install -U pyang pyangbind && \
+  DEBIAN_FRONTEND=noninteractive pip3 install -U stdeb && \
+  DEBIAN_FRONTEND=noninteractive pip2 install -U stdeb

@@ -1,0 +1,93 @@
+//INFORMATION
+//organization "CTTC";
+//contact "Pol Alemany, Ricard Vilalta, Juan Luis de la Cruz";
+//description "Network Slice components definition";
+
+// MODULE STRUCTURE
+module nsi {
+  //header information
+  yang-version 1;
+  namespace "urn:ietf:params:xml:ns:yang:nfvo:nsi";
+  prefix "nsi";
+
+  import nst {
+    prefix "nst";
+  }
+
+  import nsr {
+    prefix "nsr";
+  }
+
+  import vlr {
+    prefix "vlr";
+  }
+
+  import rw-project {
+    prefix "rw-project";
+  }
+
+  import instantiation-parameters {
+    prefix "instantiation-parameters";
+  }
+
+  //revision history
+  revision 2018-09-28 {
+    description "Initial version";
+  }
+
+  grouping nsi {
+    leaf id {
+      type string;
+    }
+    leaf nst-ref {
+      type leafref {
+        path "/nst:nst/nst:id";
+      }
+    }
+
+    container instantiation-parameters {
+      list netslice-subnet {
+        key "nsdId";
+        uses instantiation-parameters:ns_instantiate;
+      }
+      list netslice-vld {
+        key "name";
+        uses instantiation-parameters:vld;
+      }
+    }
+
+    container network-slice-template {
+      uses nst:network-slice;
+    }
+
+    list nsr-ref-list{
+      config false;
+      key "nsr-ref";
+      leaf nsr-ref {
+        description "Reference to instantiated NSR";
+        config false;
+        type leafref {
+          path "/rw-project:project/nsr:ns-instance-opdata/nsr:nsr/nsr:ns-instance-config-ref";
+        }
+      }
+    }
+
+    list vlr-ref-list{
+      key "vlr-ref";
+      config false;
+      leaf vlr-ref {
+        description "Reference to instantiated VLR";
+        config false;
+        type leafref {
+          path "/rw-project:project/vlr:vlr-catalog/vlr:vlr/vlr:id";
+        }
+      }
+    }
+  }
+
+  list nsi{
+    key "id";
+    uses nsi;
+  }
+
+}

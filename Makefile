@@ -21,7 +21,7 @@ PYANG:= pyang
 PYBINDPLUGIN:=$(shell /usr/bin/env python3 -c \
 	            'import pyangbind; import os; print("{}/plugin".format(os.path.dirname(pyangbind.__file__)))')
 
-YANG_DESC_MODELS := vnfd nsd
+YANG_DESC_MODELS := vnfd nsd nst nsi
 YANG_RECORD_MODELS := vnfr nsr
 PYTHON_MODELS := $(addsuffix .py, $(YANG_DESC_MODELS))
 YANG_DESC_TREES := $(addsuffix .tree.txt, $(YANG_DESC_MODELS))

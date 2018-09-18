@@ -38,7 +38,7 @@ module instantiation-parameters {
   revision 2018-09-14 {
     description "Initial version";
   }
-  //typedef definitions
+
   grouping ns_instantiate {
     leaf nsName {
       mandatory true;
@@ -75,6 +75,7 @@ module instantiation-parameters {
       uses vld;
     }
   }
+
   grouping vnf {
     leaf member-vnf-index{
       mandatory true;
@@ -107,7 +108,8 @@ module instantiation-parameters {
       key "member-vnf-index-ref vnfd-connection-point-ref";
       leaf member-vnf-index-ref {
         type leafref {
-            path "../../../vnf/member-vnf-index";
+            //path "../../../vnf/member-vnf-index";
+            path "/nsd:nsd-catalog/nsd:nsd/nsd:constituent-vnfd/nsd:member-vnf-index";
         }
       }
       leaf vnfd-connection-point-ref {
@@ -119,7 +121,6 @@ module instantiation-parameters {
         type inet:ip-address;
       }
     }
-
   }
 
   grouping ns_instantiate_vdu {
@@ -207,11 +208,6 @@ module instantiation-parameters {
         type inet:ip-address;
       }
     }
-  }
-  
-  list instantiation-parameters {
-    key "nsName";
-    uses ns_instantiate;
   }
 
 }

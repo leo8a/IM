@@ -5,6 +5,7 @@ rm -rf pool
 rm -rf dists
 mkdir -p pool/$MDG
 mv deb_dist/*.deb pool/$MDG/
+mv *.deb pool/$MDG/
 mv pyangbind/deb_dist/*.deb pool/$MDG/
 mv pyang/deb_dist/*.deb pool/$MDG/
 

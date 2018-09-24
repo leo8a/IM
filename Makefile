@@ -85,6 +85,8 @@ $(RW_PB_EXT):
 package:
 	tox -e build
 	tox -e build3
+	./build-docs.sh
+
 
 pyangbind: pyang
 	git clone https://github.com/alf-tierno/pyangbind

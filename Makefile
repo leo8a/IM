@@ -1,4 +1,5 @@
 # Copyright 2017 Sandvine
+# Copyright 2017-2018 Telefonica
 # All Rights Reserved.
 # 
 #    Licensed under the Apache License, Version 2.0 (the "License"); you may
@@ -36,7 +37,7 @@ Q?=@
 
 PYANG_OPTIONS := -Werror
 
-all: $(PYTHON_MODELS) pyangbind trees
+all: $(PYTHON_MODELS) trees
 	$(MAKE) package
 
 trees: $(YANG_DESC_TREES) $(YANG_DESC_JSTREES) $(YANG_RECORD_TREES) $(YANG_RECORD_JSTREES)
@@ -87,27 +88,8 @@ package:
 	tox -e build3
 	./build-docs.sh
 
-
-pyangbind: pyang
-	git clone https://github.com/alf-tierno/pyangbind
-	cd pyangbind; git checkout issue151; \
-       python setup.py --command-packages=stdeb.command bdist_deb; \
-       python3 setup.py --command-packages=stdeb.command bdist_deb; \
-       cd ..
-	mkdir -p deb_dist
-	cp pyangbind/deb_dist/*.deb deb_dist
-
-pyang:
-	git clone https://github.com/mbj4668/pyang
-	cd pyang; \
-       python setup.py --command-packages=stdeb.command bdist_deb;  \
-       python3 setup.py --command-packages=stdeb.command bdist_deb;  \
-       cd ..
-	mkdir -p deb_dist
-	cp pyang/deb_dist/*.deb deb_dist
-
 pyang-json-schema-plugin:
 	git clone https://github.com/cmoberg/pyang-json-schema-plugin
 
 clean:
-	$(Q)rm -rf build dist osm_im.egg-info deb deb_dist *.gz pyang pyangbind pyang-json-schema-plugin $(OUT_DIR) $(TREES_DIR)
+	$(Q)rm -rf build dist osm_im.egg-info deb deb_dist *.gz pyang-json-schema-plugin $(OUT_DIR) $(TREES_DIR)

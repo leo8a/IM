@@ -12,3 +12,4 @@ pyang
 dists
 pool
 .idea
+debian/osm-imdocs.install

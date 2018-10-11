@@ -95,15 +95,17 @@ module vnfd-base
         description
             "Specifies the type of virtual interface
              between VM and host.
-             VIRTIO          : Use the traditional VIRTIO interface.
+             PARAVIRT        : Use the default paravirtualized interface for the VIM (virtio, vmxnet3, etc.).
+             VIRTIO          : Deprecated! Use the traditional VIRTIO interface.
              PCI-PASSTHROUGH : Use PCI-PASSTHROUGH interface.
              SR-IOV          : Use SR-IOV interface.
              E1000           : Emulate E1000 interface.
              RTL8139         : Emulate RTL8139 interface.
              PCNET           : Emulate PCNET interface.
-             OM-MGMT         : Deprecated! Use VIRTIO instead and set the VNF management interface at vnfd:mgmt-interface:cp";
+             OM-MGMT         : Deprecated! Use PARAVIRT instead and set the VNF management interface at vnfd:mgmt-interface:cp";
 
         type enumeration {
+          enum PARAVIRT;
           enum OM-MGMT;
           enum PCI-PASSTHROUGH;
           enum SR-IOV;
@@ -112,7 +114,7 @@ module vnfd-base
           enum RTL8139;
           enum PCNET;
         }
-        default "VIRTIO";
+        default "PARAVIRT";
       }
 
       leaf vpci {

@@ -30,6 +30,10 @@ module nsi {
     prefix "instantiation-parameters";
   }
 
+  import ietf-yang-types {
+    prefix "yang";
+  }
+
   //revision history
   revision 2018-09-28 {
     description "Initial version";
@@ -37,23 +41,35 @@ module nsi {
 
   grouping nsi {
     leaf id {
+      description "Identifier for the NSI.";
+      type yang:uuid;
+    }
+
+    leaf name {
+      description "NSI name.";
+      type string;
+      mandatory true;
+    }
+
+    leaf short-name {
+      description "NSI short name.";
       type string;
     }
+
+    leaf description {
+      description "NSI description.";
+      type string;
+    }
+
     leaf nst-ref {
       type leafref {
         path "/nst:nst/nst:id";
       }
+      mandatory true;
     }
 
     container instantiation-parameters {
-      list netslice-subnet {
-        key "nsdId";
-        uses instantiation-parameters:ns_instantiate;
-      }
-      list netslice-vld {
-        key "name";
-        uses instantiation-parameters:vld;
-      }
+      uses instantiation-parameters:netslice_params;
     }
 
     container network-slice-template {
@@ -87,6 +103,7 @@ module nsi {
 
   list nsi{
     key "id";
+    unique "name";
     uses nsi;
   }
 

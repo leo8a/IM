@@ -140,41 +140,20 @@ module nst {
 
   grouping netslice-subnet {
     leaf id {
-      description "Identifier for the netslice-subnet.";
+      description "Identifier or name for the netslice-subnet in NST scope.";
       mandatory true;
       type string {
         length 1..63;
       }
     }
-    leaf name {
-      description "netslice-subnet name.";
-      mandatory true;
-      type string;
-    }
-    leaf short-name {
-      description "Short name to appear as label in the UI";
-      mandatory true;
-      type string;
-    }
-    leaf vendor {
-      description "Vendor of the NSD.";
-      mandatory true;
+    leaf description {
+      description "Description of the NSD.";
       type string;
     }
     leaf is-shared-nss {
       description "NSS is shared between NS";
-      mandatory true;
       type boolean;
-    }
-    leaf description {
-      description "Description of the NSD.";
-      mandatory true;
-      type string;
-    }
-    leaf version {
-      description "Version of the NSD";
-      mandatory true;
-      type string;
+      default false;
     }
     leaf nsd-ref {
       description "Reference to catalog NSD";
@@ -184,7 +163,7 @@ module nst {
       }
     }
     container instantiation-parameters {
-      uses instantiation-parameters:ns_instantiate;
+      uses instantiation-parameters:ns_params;
     }
 
   }
@@ -297,6 +276,7 @@ module nst {
 
     leaf name {
       type string;
+      mandatory true;
     }
 
     container SNSSAI-identifier {
@@ -317,7 +297,7 @@ module nst {
       key "id";
       uses nsvld;
     }
-    list netslicefgd{
+    list netslicefgd {
       key "id";
       uses netslicefgd;
     }

@@ -31,7 +31,6 @@ YANG_RECORD_JSTREES := $(addsuffix .rec.html, $(YANG_RECORD_MODELS))
 OUT_DIR := osm_im
 TREES_DIR := osm_im_trees
 MODEL_DIR := models/yang
-RW_PB_EXT := build/yang/rw-pb-ext.yang
 Q?=@
 
 PYANG_OPTIONS := -Werror
@@ -48,35 +47,31 @@ $(OUT_DIR):
 $(TREES_DIR):
 	$(Q)mkdir -p $(TREES_DIR)
 
-%.py: $(OUT_DIR) $(RW_PB_EXT)
+%.py: $(OUT_DIR)
 	$(Q)echo generating $@ from $*.yang
-	$(Q)pyang $(PYANG_OPTIONS) --path build/yang --path $(MODEL_DIR) --plugindir $(PYBINDPLUGIN) -f pybind -o $(OUT_DIR)/$@ $(MODEL_DIR)/$*.yang
+	$(Q)pyang $(PYANG_OPTIONS) --path $(MODEL_DIR) --plugindir $(PYBINDPLUGIN) -f pybind -o $(OUT_DIR)/$@ $(MODEL_DIR)/$*.yang
 
 %.tree.txt: $(TREES_DIR)
 	$(Q)echo generating $@ from $*.yang
-	$(Q)pyang $(PYANG_OPTIONS) --path build/yang --path $(MODEL_DIR) -f tree -o $(TREES_DIR)/$@ $(MODEL_DIR)/$*.yang
+	$(Q)pyang $(PYANG_OPTIONS) --path $(MODEL_DIR) -f tree -o $(TREES_DIR)/$@ $(MODEL_DIR)/$*.yang
 
 %.html: $(TREES_DIR)
 	$(Q)echo generating $@ from $*.yang
-	$(Q)pyang $(PYANG_OPTIONS) --path build/yang --path $(MODEL_DIR) -f jstree -o $(TREES_DIR)/$@ $(MODEL_DIR)/$*.yang
+	$(Q)pyang $(PYANG_OPTIONS) --path $(MODEL_DIR) -f jstree -o $(TREES_DIR)/$@ $(MODEL_DIR)/$*.yang
 	$(Q)sed -r -i 's|data\:image/gif\;base64,R0lGODlhS.*RCAA7|https://osm.etsi.org/images/OSM-logo.png\" width=\"175\" height=\"60|g' $(TREES_DIR)/$@
 	$(Q)sed -r -i 's|<a href=\"http://www.tail-f.com">|<a href="http://osm.etsi.org">|g' $(TREES_DIR)/$@
 
 %.rec.tree.txt: $(TREES_DIR)
 	$(Q)echo generating $@ from $*.yang
-	$(Q)pyang $(PYANG_OPTIONS) --path build/yang --path $(MODEL_DIR) -f tree -o $(TREES_DIR)/$@ $(MODEL_DIR)/$*.yang
+	$(Q)pyang $(PYANG_OPTIONS) --path $(MODEL_DIR) -f tree -o $(TREES_DIR)/$@ $(MODEL_DIR)/$*.yang
 	$(Q)mv $(TREES_DIR)/$@ $(TREES_DIR)/$*.tree.txt
 
 %.rec.html: $(TREES_DIR)
 	$(Q)echo generating $@ from $*.yang
-	$(Q)pyang $(PYANG_OPTIONS) --path build/yang --path $(MODEL_DIR) -f jstree -o $(TREES_DIR)/$@ $(MODEL_DIR)/rw-project.yang $(MODEL_DIR)/$*.yang
+	$(Q)pyang $(PYANG_OPTIONS) --path $(MODEL_DIR) -f jstree -o $(TREES_DIR)/$@ $(MODEL_DIR)/rw-project.yang $(MODEL_DIR)/$*.yang
 	$(Q)sed -r -i 's|data\:image/gif\;base64,R0lGODlhS.*RCAA7|https://osm.etsi.org/images/OSM-logo.png\" width=\"175\" height=\"60|g' $(TREES_DIR)/$@
 	$(Q)sed -r -i 's|<a href=\"http://www.tail-f.com">|<a href="http://osm.etsi.org">|g' $(TREES_DIR)/$@
 	$(Q)mv $(TREES_DIR)/$@ $(TREES_DIR)/$*.html
-
-$(RW_PB_EXT):
-	$(Q)mkdir -p $$(dirname $@)
-	$(Q)wget -q https://raw.githubusercontent.com/RIFTIO/RIFT.ware/RIFT.ware-4.4.1/modules/core/util/yangtools/yang/rw-pb-ext.yang -O $@
 
 package:
 	tox -e build
@@ -84,4 +79,4 @@ package:
 	./build-docs.sh
 
 clean:
-	$(Q)rm -rf build dist osm_im.egg-info deb deb_dist *.gz $(OUT_DIR) $(TREES_DIR)
+	$(Q)rm -rf dist osm_im.egg-info deb deb_dist *.gz $(OUT_DIR) $(TREES_DIR)

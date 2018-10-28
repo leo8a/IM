@@ -16,7 +16,7 @@
 
 # NOTE: pyang and pyangbind are required for build
 
-.PHONY: all clean package trees deps
+.PHONY: all clean package trees deps yang-ietf
 PYANG:= pyang
 PYBINDPLUGIN:=$(shell /usr/bin/env python3 -c \
 	            'import pyangbind; import os; print("{}/plugin".format(os.path.dirname(pyangbind.__file__)))')
@@ -48,31 +48,35 @@ $(OUT_DIR):
 $(TREES_DIR):
 	$(Q)mkdir -p $(TREES_DIR)
 
-%.py: $(OUT_DIR)
+%.py: $(OUT_DIR) yang-ietf
 	$(Q)echo generating $@ from $*.yang
 	$(Q)pyang $(PYANG_OPTIONS) --path $(MODEL_DIR) --plugindir $(PYBINDPLUGIN) -f pybind -o $(OUT_DIR)/$@ $(MODEL_DIR)/$*.yang
 
-%.tree.txt: $(TREES_DIR)
+%.tree.txt: $(TREES_DIR) yang-ietf
 	$(Q)echo generating $@ from $*.yang
 	$(Q)pyang $(PYANG_OPTIONS) --path $(MODEL_DIR) -f tree -o $(TREES_DIR)/$@ $(MODEL_DIR)/$*.yang
 
-%.html: $(TREES_DIR)
+%.html: $(TREES_DIR) yang-ietf
 	$(Q)echo generating $@ from $*.yang
 	$(Q)pyang $(PYANG_OPTIONS) --path $(MODEL_DIR) -f jstree -o $(TREES_DIR)/$@ $(MODEL_DIR)/$*.yang
 	$(Q)sed -r -i 's|data\:image/gif\;base64,R0lGODlhS.*RCAA7|https://osm.etsi.org/images/OSM-logo.png\" width=\"175\" height=\"60|g' $(TREES_DIR)/$@
 	$(Q)sed -r -i 's|<a href=\"http://www.tail-f.com">|<a href="http://osm.etsi.org">|g' $(TREES_DIR)/$@
 
-%.rec.tree.txt: $(TREES_DIR)
+%.rec.tree.txt: $(TREES_DIR) yang-ietf
 	$(Q)echo generating $@ from $*.yang
 	$(Q)pyang $(PYANG_OPTIONS) --path $(MODEL_DIR) -f tree -o $(TREES_DIR)/$@ $(MODEL_DIR)/$*.yang
 	$(Q)mv $(TREES_DIR)/$@ $(TREES_DIR)/$*.tree.txt
 
-%.rec.html: $(TREES_DIR)
+%.rec.html: $(TREES_DIR) yang-ietf
 	$(Q)echo generating $@ from $*.yang
 	$(Q)pyang $(PYANG_OPTIONS) --path $(MODEL_DIR) -f jstree -o $(TREES_DIR)/$@ $(MODEL_DIR)/rw-project.yang $(MODEL_DIR)/$*.yang
 	$(Q)sed -r -i 's|data\:image/gif\;base64,R0lGODlhS.*RCAA7|https://osm.etsi.org/images/OSM-logo.png\" width=\"175\" height=\"60|g' $(TREES_DIR)/$@
 	$(Q)sed -r -i 's|<a href=\"http://www.tail-f.com">|<a href="http://osm.etsi.org">|g' $(TREES_DIR)/$@
 	$(Q)mv $(TREES_DIR)/$@ $(TREES_DIR)/$*.html
+
+yang-ietf:
+	$(Q)wget -q https://raw.githubusercontent.com/YangModels/yang/master/standard/ietf/RFC/ietf-yang-types%402013-07-15.yang -O models/yang/ietf-yang-types.yang
+	$(Q)wget -q https://raw.githubusercontent.com/YangModels/yang/master/standard/ietf/RFC/ietf-inet-types%402013-07-15.yang -O models/yang/ietf-inet-types.yang
 
 package:
 	tox -e build

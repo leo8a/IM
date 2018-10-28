@@ -13,3 +13,5 @@ dists
 pool
 .idea
 debian/osm-imdocs.install
+models/yang/ietf-yang-types.yang
+models/yang/ietf-inet-types.yang

@@ -23,7 +23,6 @@ PYBINDPLUGIN:=$(shell /usr/bin/env python3 -c \
 YANG_DESC_MODELS := vnfd nsd
 YANG_RECORD_MODELS := vnfr nsr
 PYTHON_MODELS := $(addsuffix .py, $(YANG_DESC_MODELS))
-PYTHON_JSONSCHEMAS := $(addsuffix .jsonschema, $(YANG_DESC_MODELS))
 YANG_DESC_TREES := $(addsuffix .tree.txt, $(YANG_DESC_MODELS))
 YANG_DESC_JSTREES := $(addsuffix .html, $(YANG_DESC_MODELS))
 YANG_RECORD_TREES := $(addsuffix .rec.tree.txt, $(YANG_RECORD_MODELS))
@@ -52,10 +51,6 @@ $(TREES_DIR):
 %.py: $(OUT_DIR) $(RW_PB_EXT)
 	$(Q)echo generating $@ from $*.yang
 	$(Q)pyang $(PYANG_OPTIONS) --path build/yang --path $(MODEL_DIR) --plugindir $(PYBINDPLUGIN) -f pybind -o $(OUT_DIR)/$@ $(MODEL_DIR)/$*.yang
-
-%.jsonschema: $(OUT_DIR) $(RW_PB_EXT) pyang-json-schema-plugin
-	$(Q)echo generating $@ from $*.yang
-	$(Q)pyang $(PYANG_OPTIONS) --path build/yang --path $(MODEL_DIR) --plugindir pyang-json-schema-plugin -f json-schema -o $(OUT_DIR)/$@ $(MODEL_DIR)/$*.yang
 
 %.tree.txt: $(TREES_DIR)
 	$(Q)echo generating $@ from $*.yang
@@ -88,8 +83,5 @@ package:
 	tox -e build3
 	./build-docs.sh
 
-pyang-json-schema-plugin:
-	git clone https://github.com/cmoberg/pyang-json-schema-plugin
-
 clean:
-	$(Q)rm -rf build dist osm_im.egg-info deb deb_dist *.gz pyang-json-schema-plugin $(OUT_DIR) $(TREES_DIR)
+	$(Q)rm -rf build dist osm_im.egg-info deb deb_dist *.gz $(OUT_DIR) $(TREES_DIR)

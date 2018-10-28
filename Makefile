@@ -16,6 +16,7 @@
 
 # NOTE: pyang and pyangbind are required for build
 
+.PHONY: all clean package trees deps
 PYANG:= pyang
 PYBINDPLUGIN:=$(shell /usr/bin/env python3 -c \
 	            'import pyangbind; import os; print("{}/plugin".format(os.path.dirname(pyangbind.__file__)))')
@@ -77,6 +78,15 @@ package:
 	tox -e build
 	tox -e build3
 	./build-docs.sh
+
+deps:
+	$(Q)sudo apt-get -y install git make wget python python-pip debhelper dh-make tox python3 python3-pip maven
+	$(Q)sudo -H python3 -m pip install -U pip
+	$(Q)sudo -H python2 -m pip install -U pip
+	$(Q)sudo -H python3 -m pip install -U pyang pyangbind stdeb
+	$(Q)sudo -H python2 -m pip install -U pyang pyangbind stdeb
+	$(Q)mkdir -p ~/.m2
+	$(Q)cp -n ~/.m2/settings.xml{,.orig} ; wget -q -O - https://raw.githubusercontent.com/opendaylight/odlparent/master/settings.xml > ~/.m2/settings.xml
 
 clean:
 	$(Q)rm -rf dist osm_im.egg-info deb deb_dist *.gz $(OUT_DIR) $(TREES_DIR)

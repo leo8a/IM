@@ -9,9 +9,6 @@ setup(
     author_email='mmarchetti@sandvine.com',
     packages=find_packages(),
     include_package_data=True,
-    install_requires=[
-        'pyangbind'
-    ],
     setup_requires=['setuptools-version-command'],
     test_suite='nose.collector',
 )

@@ -120,10 +120,12 @@ module vnfr
         description
             "Specifies the type of virtual interface
              between VM and host.
-             VIRTIO          : Use the traditional VIRTIO interface.
+             PARAVIRT        : Use the default paravirtualized interface for the VIM (virtio, vmxnet3, etc.).
+             VIRTIO          : Deprecated! Use the traditional VIRTIO interface.
              PCI-PASSTHROUGH : Use PCI-PASSTHROUGH interface.
              SR-IOV          : Use SR-IOV interface.";
         type enumeration {
+          enum PARAVIRT;
           enum VIRTIO;
           enum PCI-PASSTHROUGH;
           enum SR-IOV;

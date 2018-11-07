@@ -20,7 +20,8 @@ RUN  apt-get update && \
   DEBIAN_FRONTEND=noninteractive apt-get -y install git make wget python \
                                             python3 python3-all python3-pip python-pip \
                                             debhelper tox python-setuptools \
-                                            python3-setuptools build-essential dh-make && \
+                                            python3-setuptools build-essential dh-make \
+                                            openjdk-8-jdk maven && \
   DEBIAN_FRONTEND=noninteractive pip3 install pip==9.0.3 && \
   DEBIAN_FRONTEND=noninteractive pip3 install -U pyang pyangbind && \
   DEBIAN_FRONTEND=noninteractive pip3 install -U stdeb && \

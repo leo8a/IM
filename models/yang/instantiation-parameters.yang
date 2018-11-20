@@ -1,0 +1,212 @@
+//INFORMATION
+//organization "CTTC";
+//contact "Pol Alemany, Ricard Vilalta, Juan Luis de la Cruz";
+//description "Network Slice components definition";
+
+// MODULE STRUCTURE
+module instantiation-parameters {
+  //header information
+  yang-version 1;
+  namespace "urn:ietf:params:xml:ns:yang:nfvo:instantiation-parameters";
+  prefix "instantiation-parameters";
+  
+  import nsd {
+    prefix "nsd";
+  }
+
+  import vnfd {
+    prefix "vnfd";
+  }
+
+  import ietf-inet-types {
+    prefix "inet";
+  }
+
+  import ietf-yang-types {
+    prefix "ietf-yang";
+  }
+
+  //revision history
+  revision 2018-09-14 {
+    description "Initial version";
+  }
+
+  grouping netslice_params {
+    leaf vimAccountId {
+      mandatory true;
+      type string;
+    }
+    leaf ssh_keys {
+      type string;
+    }
+    list netslice-subnet {
+      key "id";
+      uses netslice_subnet_params;
+    }
+    list netslice-vld {
+      key "name";
+      uses vld_params;
+    }
+  }
+
+  grouping netslice_subnet_params {
+    leaf id {
+      mandatory true;
+      type string;
+    }
+    uses ns_params;
+  }
+
+  grouping ns_params {
+    leaf vimAccountId {
+      mandatory true;
+      type string;
+    }
+    leaf ssh_keys {
+      type string;
+    }
+    list vnf {
+      key "member-vnf-index";
+      uses vnf_params;
+    }
+    list vld {
+      key "name";
+      uses vld_params;
+    }
+  }
+
+  grouping vnf_params {
+    leaf member-vnf-index{
+      mandatory true;
+      type string;
+    }
+    leaf vimAccountId {
+      type string;
+    }
+    list vdu {
+      key "id";
+      uses vdu_params;
+    }
+    list internal-vld {
+      key "name";
+      uses internal_vld_params;
+    }
+  }
+
+  grouping vld_params {
+    leaf name {
+      type string;
+    }
+    leaf vim-network-name {
+      type string;
+    }
+    container ip-profile {
+      uses ip-profile-update-schema;
+    }
+    list vnfd-connection-point-ref {
+      key "member-vnf-index-ref vnfd-connection-point-ref";
+      leaf member-vnf-index-ref {
+        type leafref {
+            //path "../../../vnf/member-vnf-index";
+            path "/nsd:nsd-catalog/nsd:nsd/nsd:constituent-vnfd/nsd:member-vnf-index";
+        }
+      }
+      leaf vnfd-connection-point-ref {
+        type leafref {
+          path "/vnfd:vnfd-catalog/vnfd:vnfd/vnfd:connection-point/vnfd:name";
+        }
+      }
+      leaf ip-address{
+        type inet:ip-address;
+      }
+    }
+  }
+
+  grouping vdu_params {
+    leaf id {
+      mandatory true;
+      type string;
+    }
+    list volume {
+      key "name";
+      leaf name {
+        mandatory true;
+        type string;
+      }
+      leaf vim-volume-id {
+        mandatory true;
+        type string;
+      }
+    }
+    list interface {
+      key "name";
+      leaf name {
+        mandatory true;
+        type string;
+      }
+      leaf ip-address {
+        type inet:ip-address;
+      }
+      leaf mac-address {
+        type ietf-yang:mac-address;
+      }
+      leaf floating-ip-required {
+        type boolean;
+      }
+    }
+  }
+
+  grouping internal_vld_params {
+    leaf name {
+      mandatory true;
+      type string;
+    }
+    leaf vim-network-name {
+      type string; 
+    }
+    container ip-profile {
+      uses ip-profile-update-schema;
+    }
+    list internal-connection-point {
+      key "id-ref";
+      leaf id-ref {
+        mandatory true;
+        type string;
+      }
+      leaf ip-address{
+        type inet:ip-address;
+      }
+    }
+  }
+
+  grouping ip-profile-update-schema { //each leaf/list is either null or something
+    leaf ip-version {
+      type inet:ip-version;
+    }
+    leaf subnet-address {
+      type inet:ip-prefix;
+    }
+    leaf gateway-address {
+      type inet:ip-prefix;
+    }
+    list dns-server {
+      key "address";
+      leaf address {
+        mandatory true;
+        type inet:ip-address;
+      }
+    }
+    container dhcp-params {
+      leaf enabled {
+        type boolean;
+      }
+      leaf count {
+        type uint8; // >=1
+      }
+      leaf start-address {
+        type inet:ip-address;
+      }
+    }
+  }
+
+}

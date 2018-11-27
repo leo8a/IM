@@ -1,9 +1,23 @@
-//INFORMATION
-//organization "CTTC";
-//contact "Pol Alemany, Ricard Vilalta, Juan Luis de la Cruz";
-//description "Network Slice components definition";
+/*
+ *
+ *   Copyright 2018 CTTC
+ *   Copyright 2018 Telefonica Investigacion y Desarrollo S.A.U.
+ *
+ *   Licensed under the Apache License, Version 2.0 (the "License");
+ *   you may not use this file except in compliance with the License.
+ *   You may obtain a copy of the License at
+ *
+ *       http://www.apache.org/licenses/LICENSE-2.0
+ *
+ *   Unless required by applicable law or agreed to in writing, software
+ *   distributed under the License is distributed on an "AS IS" BASIS,
+ *   WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ *   See the License for the specific language governing permissions and
+ *   limitations under the License.
+ *
+ *
+ */
 
-// MODULE STRUCTURE
 module instantiation-parameters {
   //header information
   yang-version 1;
@@ -25,36 +39,10 @@ module instantiation-parameters {
   import ietf-yang-types {
     prefix "ietf-yang";
   }
-
+  
   //revision history
   revision 2018-09-14 {
     description "Initial version";
-  }
-
-  grouping netslice_params {
-    leaf vimAccountId {
-      mandatory true;
-      type string;
-    }
-    leaf ssh_keys {
-      type string;
-    }
-    list netslice-subnet {
-      key "id";
-      uses netslice_subnet_params;
-    }
-    list netslice-vld {
-      key "name";
-      uses vld_params;
-    }
-  }
-
-  grouping netslice_subnet_params {
-    leaf id {
-      mandatory true;
-      type string;
-    }
-    uses ns_params;
   }
 
   grouping ns_params {
@@ -93,7 +81,7 @@ module instantiation-parameters {
     }
   }
 
-  grouping vld_params {
+  grouping vld_common_params {
     leaf name {
       type string;
     }
@@ -103,6 +91,10 @@ module instantiation-parameters {
     container ip-profile {
       uses ip-profile-update-schema;
     }
+  }
+
+  grouping vld_params {
+    uses vld_common_params;
     list vnfd-connection-point-ref {
       key "member-vnf-index-ref vnfd-connection-point-ref";
       leaf member-vnf-index-ref {

@@ -2162,7 +2162,7 @@ module mano-types
   grouping supplemental-boot-data {
     description "Grouping for custom vim data";
     container supplemental-boot-data {
-      uses manotypes:config-file;
+//    uses manotypes:config-file;
       leaf boot-data-drive {
         description "Some VIMs implement additional drives to host config-files or meta-data";
         type boolean;

@@ -507,7 +507,16 @@ module nsr
                   path "../../../../../../vnfr:vnfr-catalog/vnfr:vnfr/vnfr:name";
                 }
           }
-          leaf vnfr-connection-point-ref {
+          leaf vnfr-ingress-connection-point-ref {
+            description
+                "A reference to a vnfr connection point.";
+            type leafref {
+              path "../../../../../../vnfr:vnfr-catalog/vnfr:vnfr"
+                 + "[vnfr:id = current()/../vnfr-id-ref]"
+                 + "/vnfr:connection-point/vnfr:name";
+            }
+          }
+          leaf vnfr-egress-connection-point-ref {
             description
                 "A reference to a vnfr connection point.";
             type leafref {

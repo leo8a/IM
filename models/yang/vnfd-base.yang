@@ -721,7 +721,9 @@ module vnfd-base
             leaf scale-in-threshold {
               description
                   "Value below which scale-in requests are generated";
-              type uint64;
+              type decimal64{
+                fraction-digits 10;
+             }
             }
 
             leaf scale-in-relational-operation {
@@ -735,7 +737,9 @@ module vnfd-base
             leaf scale-out-threshold {
               description
                   "Value above which scale-out requests are generated";
-              type uint64;
+              type decimal64{
+                fraction-digits 10;
+             }
             }
 
             leaf scale-out-relational-operation {

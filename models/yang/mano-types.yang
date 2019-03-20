@@ -1822,14 +1822,7 @@ module mano-types
     }
   }
 
-  grouping alarm {
-    leaf alarm-id {
-      description
-          "This field is reserved for the identifier assigned by the VIM provider";
-
-      type string;
-    }
-
+  grouping alarm-properties {
     leaf name {
       description "A human readable string to identify the alarm";
       type string;
@@ -1890,11 +1883,6 @@ module mano-types
     leaf severity {
       description "A measure of the importance or urgency of the alarm";
       type alarm-severity-type;
-    }
-
-    leaf metric {
-      description "The metric to be tracked by this alarm.";
-      type alarm-metric-type;
     }
 
     leaf statistic {

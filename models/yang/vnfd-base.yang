@@ -417,7 +417,24 @@ module vnfd-base
         list alarm {
           key "alarm-id";
 
-          uses manotypes:alarm;
+          leaf alarm-id {
+            description
+                  "This field is reserved for the identifier assigned by the VIM provider";
+
+            type string;
+          }
+
+
+          leaf vnf-monitoring-param-ref {
+              description
+                 "Reference to the VNF level monitoring parameter
+                  that is aggregated";
+              type leafref {
+                path "../../monitoring-param/id";
+              }
+          }
+
+          uses manotypes:alarm-properties;
         }
 
         uses manotypes:image-properties;

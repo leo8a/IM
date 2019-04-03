@@ -20,7 +20,7 @@
 
 module project-nsd
 {
-  namespace "http://riftio.com/ns/riftware-1.0/project-nsd";
+  namespace "urn:etsi:osm:yang:project-nsd";
   prefix "project-nsd";
 
   import mano-types {
@@ -35,8 +35,8 @@ module project-nsd
     prefix "nsd-base";
   }
 
-  import rw-project {
-    prefix "rw-project";
+  import osm-project {
+    prefix "osm-project";
   }
 
 
@@ -70,7 +70,7 @@ module project-nsd
         description
           "Identifier for the VNFD.";
         type leafref {
-          path "/rw-project:project[rw-project:name = current()/../../../../rw-project:name]" +
+          path "/osm-project:project[osm-project:name = current()/../../../../osm-project:name]" +
             "/project-vnfd:vnfd-catalog/project-vnfd:vnfd/project-vnfd:id";
         }
       }
@@ -104,7 +104,7 @@ module project-nsd
         description
           "Identifier for the VNFD.";
         type leafref {
-          path "/rw-project:project[rw-project:name = current()/../../../../../rw-project:name]" +
+          path "/osm-project:project[osm-project:name = current()/../../../../../osm-project:name]" +
             "/project-vnfd:vnfd-catalog/project-vnfd:vnfd/project-vnfd:id";
         }
       }
@@ -587,7 +587,7 @@ module project-nsd
      uses nsd-service-primitive;
   }
 
-  augment "/rw-project:project" {
+  augment "/osm-project:project" {
     container nsd-catalog {
 
       list nsd {

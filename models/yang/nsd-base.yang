@@ -20,7 +20,7 @@
 
 module nsd-base
 {
-  namespace "http://riftio.com/ns/riftware-1.0/nsd-base";
+  namespace "urn:etsi:osm:yang:nsd-base";
   prefix "nsd-base";
 
   import ietf-inet-types {

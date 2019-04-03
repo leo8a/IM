@@ -20,7 +20,7 @@
 
 module vlr
 {
-  namespace "urn:ietf:params:xml:ns:yang:nfvo:vlr";
+  namespace "urn:etsi:osm:yang:vlr";
   prefix "vlr";
 
   import ietf-yang-types {
@@ -31,8 +31,8 @@ module vlr
     prefix "manotypes";
   }
 
-  import rw-project {
-    prefix "rw-project";
+  import osm-project {
+    prefix "osm-project";
   }
 
   revision 2017-02-08 {
@@ -48,7 +48,7 @@ module vlr
       "Derived from earlier versions of base YANG files";
   }
 
-  augment "/rw-project:project" {
+  augment "/osm-project:project" {
     container vlr-catalog {
       leaf schema-version {
         description "Schema version for the VLR. If unspecified, it assumes v3.0";
@@ -75,14 +75,14 @@ module vlr
         leaf nsr-id-ref {
           description
             "NS instance identifier. 
-             This is a leafref /rw-project:project/nsr:ns-instance-config/nsr:nsr/nsr:id";
+             This is a leafref /osm-project:project/nsr:ns-instance-config/nsr:nsr/nsr:id";
           type yang:uuid;
         }
 
         leaf vld-ref {
           description
             "Reference to VLD
-           /rw-project:project/nsr:ns-instance-config/nsr:nsr[nsr:id=../nsr-id-ref]
+           /osm-project:project/nsr:ns-instance-config/nsr:nsr[nsr:id=../nsr-id-ref]
            /nsd/vld:vld/vld:id";
           type string;
         }

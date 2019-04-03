@@ -20,7 +20,7 @@
 
 module vnfr
 {
-  namespace "urn:ietf:params:xml:ns:yang:nfvo:vnfr";
+  namespace "urn:etsi:osm:yang:vnfr";
   prefix "vnfr";
 
   import mano-types {
@@ -51,8 +51,8 @@ module vnfr
     prefix "inet";
   }
 
-  import rw-project {
-    prefix "rw-project";
+  import osm-project {
+    prefix "osm-project";
   }
 
   revision 2017-02-28 {
@@ -197,7 +197,7 @@ module vnfr
     }
   }
 
-  augment "/rw-project:project" {
+  augment "/osm-project:project" {
     container vnfr-catalog {
       leaf schema-version {
         description "Schema version for the VNFR. If unspecified, it assumes v3.0";

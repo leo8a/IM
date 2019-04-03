@@ -21,7 +21,7 @@
 module instantiation-parameters {
   //header information
   yang-version 1;
-  namespace "urn:ietf:params:xml:ns:yang:nfvo:instantiation-parameters";
+  namespace "urn:etsi:osm:yang:instantiation-parameters";
   prefix "instantiation-parameters";
   
   import nsd {

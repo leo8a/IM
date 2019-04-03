@@ -20,15 +20,15 @@
 
 module vnffgd
 {
-  namespace "urn:ietf:params:xml:ns:yang:nfvo:vnffgd";
+  namespace "urn:etsi:osm:yang:vnffgd";
   prefix "vnffgd";
 
   import ietf-yang-types {
     prefix "yang";
   }
 
-  import rw-project {
-    prefix "rw-project";
+  import osm-project {
+    prefix "osm-project";
   }
 
   revision 2017-02-08 {
@@ -44,7 +44,7 @@ module vnffgd
       "Derived from earlier versions of base YANG files";
   }
 
-  augment "/rw-project:project" {
+  augment "/osm-project:project" {
     container vnffgd-catalog {
 
       list vnffgd {

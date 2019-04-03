@@ -20,11 +20,11 @@
 
 module project-vnfd
 {
-  namespace "http://riftio.com/ns/riftware-1.0/project-vnfd";
+  namespace "urn:etsi:osm:yang:project-vnfd";
   prefix "project-vnfd";
 
-  import rw-project {
-    prefix "rw-project";
+  import osm-project {
+    prefix "osm-project";
   }
 
   import vnfd-base {
@@ -40,7 +40,7 @@ module project-vnfd
       "Derived from earlier versions of base YANG files";
   }
 
-  augment /rw-project:project {
+  augment /osm-project:project {
     container vnfd-catalog {
       description
         "Virtual Network Function Descriptor (VNFD).";

@@ -20,7 +20,7 @@
 
 module vnfd
 {
-  namespace "urn:ietf:params:xml:ns:yang:nfvo:vnfd";
+  namespace "urn:etsi:osm:yang:vnfd";
   prefix "vnfd";
 
   import vnfd-base {

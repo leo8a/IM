@@ -21,7 +21,7 @@
 module netslice-instantiation-parameters {
   //header information
   yang-version 1;
-  namespace "urn:ietf:params:xml:ns:yang:nfvo:netslice-instantiation-parameters";
+  namespace "urn:etsi:osm:yang:netslice-instantiation-parameters";
   prefix "netslice-instantiation-parameters";
   
   import nsd {

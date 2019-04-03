@@ -21,7 +21,7 @@
 module nst {
   //header information
   yang-version 1;
-  namespace "urn:ietf:params:xml:ns:yang:nfvo:nst";
+  namespace "urn:etsi:osm:yang:nst";
   prefix "nst";
 
   import nsd-base{

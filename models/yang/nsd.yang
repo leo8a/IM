@@ -20,7 +20,7 @@
 
 module nsd
 {
-  namespace "urn:ietf:params:xml:ns:yang:nfvo:nsd";
+  namespace "urn:etsi:osm:yang:nsd";
   prefix "nsd";
 
   import vnfd {

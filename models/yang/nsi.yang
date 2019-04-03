@@ -21,7 +21,7 @@
 module nsi {
   //header information
   yang-version 1;
-  namespace "urn:ietf:params:xml:ns:yang:nfvo:nsi";
+  namespace "urn:etsi:osm:yang:nsi";
   prefix "nsi";
 
   import nst {
@@ -32,8 +32,8 @@ module nsi {
     prefix "nsr";
   }
 
-  import rw-project {
-    prefix "rw-project";
+  import osm-project {
+    prefix "osm-project";
   }
 
   import netslice-instantiation-parameters {
@@ -93,7 +93,7 @@ module nsi {
         description "Reference to instantiated NSR";
         config false;
         type leafref {
-          path "/rw-project:project/nsr:ns-instance-opdata/nsr:nsr/nsr:ns-instance-config-ref";
+          path "/osm-project:project/nsr:ns-instance-opdata/nsr:nsr/nsr:ns-instance-config-ref";
         }
       }
     }

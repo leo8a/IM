@@ -73,7 +73,7 @@ $(TREES_DIR):
 
 %.rec.html: $(TREES_DIR) yang-ietf
 	$(Q)echo generating $@ from $*.yang
-	$(Q)pyang $(PYANG_OPTIONS) --path $(MODEL_DIR) -f jstree -o $(TREES_DIR)/$@ $(MODEL_DIR)/rw-project.yang $(MODEL_DIR)/$*.yang
+	$(Q)pyang $(PYANG_OPTIONS) --path $(MODEL_DIR) -f jstree -o $(TREES_DIR)/$@ $(MODEL_DIR)/osm-project.yang $(MODEL_DIR)/$*.yang
 	$(Q)sed -r -i 's|data\:image/gif\;base64,R0lGODlhS.*RCAA7|https://osm.etsi.org/images/OSM-logo.png\" width=\"175\" height=\"60|g' $(TREES_DIR)/$@
 	$(Q)sed -r -i 's|<a href=\"http://www.tail-f.com">|<a href="http://osm.etsi.org">|g' $(TREES_DIR)/$@
 	$(Q)mv $(TREES_DIR)/$@ $(TREES_DIR)/$*.html

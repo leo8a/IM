@@ -20,7 +20,7 @@
 
 module nsr
 {
-  namespace "urn:ietf:params:xml:ns:yang:nfvo:nsr";
+  namespace "urn:etsi:osm:yang:nsr";
   prefix "nsr";
 
   import vlr {
@@ -55,8 +55,8 @@ module nsr
     prefix "manotypes";
   }
 
-  import rw-project {
-    prefix "rw-project";
+  import osm-project {
+    prefix "osm-project";
   }
 
   revision 2017-02-08 {
@@ -161,7 +161,7 @@ module nsr
     }
   }
 
-  augment "/rw-project:project" {
+  augment "/osm-project:project" {
     list key-pair {
       key "name";
       description "Used to configure the list of public keys to be injected as part
@@ -210,7 +210,7 @@ module nsr
     }
   }
 
-  augment "/rw-project:project" {
+  augment "/osm-project:project" {
     container ns-instance-config {
 
       list nsr {
@@ -640,7 +640,7 @@ module nsr
     }
   }
 
-  augment "/rw-project:project" {
+  augment "/osm-project:project" {
     container ns-instance-opdata {
       config false;
 
@@ -1160,7 +1160,7 @@ module nsr
     leaf nsr_id_ref {
       description "Reference to NSR ID ref";
       type leafref {
-        path "/rw-project:project[rw-project:name=current()/.." +
+        path "/osm-project:project[osm-project:name=current()/.." +
           "/nsr:project-name]/nsr:ns-instance-config/nsr:nsr/nsr:id";
       }
       mandatory true;
@@ -1460,7 +1460,7 @@ module nsr
       leaf scaling-group-name-ref {
         description "name of the scaling group";
         type leafref {
-          path "/rw-project:project[rw-project:name=current()/.." +
+          path "/osm-project:project[osm-project:name=current()/.." +
             "/nsr:project-name]/nsr:ns-instance-config/nsr:nsr" +
             "[nsr:id=current()/../nsr:nsr_id_ref]/nsr:nsd" +
             "/nsr:scaling-group-descriptor/nsr:name";
@@ -1471,7 +1471,7 @@ module nsr
       leaf instance-id {
         description "id of the scaling group";
         type leafref {
-          path "/rw-project:project[rw-project:name=current()/.." +
+          path "/osm-project:project[osm-project:name=current()/.." +
             "/nsr:project-name]/nsr:ns-instance-config/nsr:nsr" +
             "[nsr:id=current()/../nsr:nsr_id_ref]" +
             "/nsr:scaling-group[nsr:scaling-group-name-ref=current()/.." +
@@ -1499,7 +1499,7 @@ module nsr
       leaf scaling-group-name-ref {
         description "name of the scaling group";
         type leafref {
-          path "/rw-project:project[rw-project:name=current()/.." +
+          path "/osm-project:project[osm-project:name=current()/.." +
             "/nsr:project-name]/nsr:ns-instance-config/nsr:nsr" +
             "[nsr:id=current()/../nsr:nsr_id_ref]/nsr:nsd" +
             "/nsr:scaling-group-descriptor/nsr:name";
@@ -1535,7 +1535,7 @@ module nsr
       leaf nsd_id_ref {
         description "Reference to NSD ID ref";
         type leafref {
-          path "/rw-project:project[rw-project:name=current()/.." +
+          path "/osm-project:project[osm-project:name=current()/.." +
             "/project-name]/project-nsd:nsd-catalog/project-nsd:nsd/project-nsd:id";
         }
       }
@@ -1567,7 +1567,7 @@ module nsr
           description
             "A reference to VNFD placement group";
           type leafref {
-            path "/rw-project:project[rw-project:name=current()/" +
+            path "/osm-project:project[osm-project:name=current()/" +
               "../../project-name]/project-vnfd:vnfd-catalog/project-vnfd:vnfd[project-vnfd:id = " +
               "current()/../vnfd-id-ref]/project-vnfd:placement-groups/project-vnfd:name";
           }
@@ -1583,7 +1583,7 @@ module nsr
           leaf key-pair-ref {
             description "A reference to the key pair entry in the global key pair table";
             type leafref {
-              path "/rw-project:project[rw-project:name=current()/../../../" +
+              path "/osm-project:project[osm-project:name=current()/../../../" +
                 "project-name]/key-pair/name";
             }
           }
@@ -1610,7 +1610,7 @@ module nsr
             leaf key-pair-ref {
               description "A reference to the key pair entry in the global key pair table";
               type leafref {
-                path "/rw-project:project[rw-project:name=current()/" +
+                path "/osm-project:project[osm-project:name=current()/" +
                   "../../../../project-name]/key-pair/name";
               }
             }

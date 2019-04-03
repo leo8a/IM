@@ -20,7 +20,7 @@
 
 module vnfd-base
 {
-  namespace "http://riftio.com/ns/riftware-1.0/vnfd-base";
+  namespace "urn:etsi:osm:yang:vnfd-base";
   prefix "vnfd-base";
 
   import mano-types {

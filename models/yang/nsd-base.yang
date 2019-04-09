@@ -554,6 +554,10 @@ module nsd-base
 
     uses manotypes:ip-profile-list;
 
+    container ns-configuration {
+      uses manotypes:ns-configuration;
+    }
+
     list initial-service-primitive {
       description
         "Initial set of service primitives for NSD.";

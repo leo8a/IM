@@ -882,6 +882,10 @@ module nsr
           type ns-operational-status;
         }
 
+        container ns-configuration {
+          uses manotypes:vca-configuration;
+        }
+
         leaf config-status {
           description
             "The configuration status of the NS instance

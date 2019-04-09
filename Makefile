@@ -17,6 +17,7 @@
 # NOTE: pyang and pyangbind are required for build
 
 .PHONY: all clean package trees deps yang-ietf openapi_schemas yang2swagger
+JAVA:=/usr/lib/jvm/java-8-openjdk-amd64/jre/bin/java
 PYANG:= pyang
 PYBINDPLUGIN:=$(shell /usr/bin/env python3 -c \
 	            'import pyangbind; import os; print("{}/plugin".format(os.path.dirname(pyangbind.__file__)))')
@@ -79,7 +80,7 @@ $(TREES_DIR):
 
 osm.yaml: $(OUT_DIR) yang-ietf yang2swagger
 	$(Q)echo generating $@
-	$(Q)java -jar ${HOME}/.m2/repository/com/mrv/yangtools/swagger-generator-cli/*-SNAPSHOT/swagger-generator-cli-*-SNAPSHOT-executable.jar -yang-dir $(MODEL_DIR) -output $(OUT_DIR)/$@
+	$(Q)$(JAVA) -jar ${HOME}/.m2/repository/com/mrv/yangtools/swagger-generator-cli/1.1.11/swagger-generator-cli-1.1.11-executable.jar -yang-dir $(MODEL_DIR) -output $(OUT_DIR)/$@
 
 yang-ietf:
 	$(Q)wget -q https://raw.githubusercontent.com/YangModels/yang/master/standard/ietf/RFC/ietf-yang-types%402013-07-15.yang -O models/yang/ietf-yang-types.yang
@@ -89,6 +90,7 @@ yang2swagger:
 	$(Q)mkdir -p ${HOME}/.m2
 	$(Q)wget -q -O ${HOME}/.m2/settings.xml https://raw.githubusercontent.com/opendaylight/odlparent/master/settings.xml
 	git clone https://github.com/bartoszm/yang2swagger.git
+	git -C yang2swagger checkout tags/1.1.11
 	mvn -f yang2swagger/pom.xml clean install
 
 package:

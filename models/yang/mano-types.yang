@@ -692,7 +692,8 @@ module mano-types
       enum disk_write_bytes;
       enum packets_sent;
       enum packets_received;
-      enum packets_dropped;
+      enum packets_in_dropped;
+      enum packets_out_dropped;
     }
   }
 

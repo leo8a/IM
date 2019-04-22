@@ -855,7 +855,6 @@ module mano-types
         }
       }
 
-
       leaf om-cpu-model-string {
         description "OpenMANO CPU model string";
         type string;
@@ -869,6 +868,7 @@ module mano-types
           type string;
         }
       }
+
     }
   }
 
@@ -900,45 +900,74 @@ module mano-types
         }
       }
 
-      leaf cpu-pinning-policy {
-        description
-            "CPU pinning policy describes association
-             between virtual CPUs in guest and the
-             physical CPUs in the host.
-             DEDICATED : Virtual CPUs are pinned to
-                         physical CPUs
-             SHARED    : Multiple VMs may share the
-                         same physical CPUs.
-             ANY       : Any policy is acceptable for the VM";
-        type enumeration {
-          enum DEDICATED;
-          enum SHARED;
-          enum ANY;
+      choice cpu-policy {
+        case cpu-pinning {
+          leaf cpu-pinning-policy {
+            description
+                "CPU pinning policy describes association
+                 between virtual CPUs in guest and the
+                 physical CPUs in the host.
+                 DEDICATED : Virtual CPUs are pinned to
+                             physical CPUs
+                 SHARED    : Multiple VMs may share the
+                             same physical CPUs.
+                 ANY       : Any policy is acceptable for the VM";
+            type enumeration {
+              enum DEDICATED;
+              enum SHARED;
+              enum ANY;
+            }
+            default "ANY";
+          }
+          leaf cpu-thread-pinning-policy {
+              description
+                "CPU thread pinning policy describes how to
+                 place the guest CPUs when the host supports
+                 hyper threads:
+                 AVOID   : Avoids placing a guest on a host
+                           with threads.
+                 SEPARATE: Places vCPUs on separate cores,
+                           and avoids placing two vCPUs on
+                           two threads of same core.
+                 ISOLATE : Places each vCPU on a different core,
+                           and places no vCPUs from a different
+                           guest on the same core.
+                 PREFER  : Attempts to place vCPUs on threads
+                           of the same core.";
+            type enumeration {
+              enum AVOID;
+              enum SEPARATE;
+              enum ISOLATE;
+              enum PREFER;
+            }
+          }
         }
-        default "ANY";
+
+        case cpu-quota {
+          container cpu-quota {
+              description "CPU quota describes the CPU resource allocation policy.
+                           Limit and Reserve values are defined in MHz";
+              uses allocation-properties;
+          }
+        }
       }
 
-      leaf cpu-thread-pinning-policy {
-          description
-            "CPU thread pinning policy describes how to
-             place the guest CPUs when the host supports
-             hyper threads:
-             AVOID   : Avoids placing a guest on a host
-                       with threads.
-             SEPARATE: Places vCPUs on separate cores,
-                       and avoids placing two vCPUs on
-                       two threads of same core.
-             ISOLATE : Places each vCPU on a different core,
-                       and places no vCPUs from a different
-                       guest on the same core.
-             PREFER  : Attempts to place vCPUs on threads
-                       of the same core.";
-        type enumeration {
-          enum AVOID;
-          enum SEPARATE;
-          enum ISOLATE;
-          enum PREFER;
-        }
+      container mem-quota {
+          description "Memory quota describes the memory resource allocation policy.
+                       Limit and Reserve values are defined in MB";
+          uses allocation-properties;
+      }
+
+      container disk-io-quota {
+          description "Disk IO quota describes the disk IO operations resource allocation policy.
+                       Limit and Reserve values are defined in IOPS";
+          uses allocation-properties;
+      }
+
+      container vif-quota {
+          description "Virtual interfaces quota describes the virtual interface bandwidth resource allocation policy.
+                       Limit and Reserve values are defined in Mbps";
+          uses allocation-properties;
       }
 
       list pcie-device {
@@ -1072,6 +1101,27 @@ module mano-types
           }
         }
       }
+    }
+  }
+
+  grouping allocation-properties {
+    leaf limit {
+      description "Defines the maximum allocation. The value 0 indicates that usage is not limited.
+                   This parameter ensures that the instance never uses more than the defined amount of resource.";
+      type uint64;
+    }
+
+    leaf reserve {
+      description "Defines the guaranteed minimum reservation.
+                   If needed, the machine will definitely get allocated the reserved amount of resources.";
+      type uint64;
+    }
+
+    leaf shares {
+      description "Number of shares allocated.
+                   Specifies the proportional weighted share for the domain.
+                   If this element is omitted, the service defaults to the OS provided defaults";
+      type uint64;
     }
   }
 

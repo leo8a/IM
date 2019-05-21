@@ -390,10 +390,10 @@ module nsd-base
           type manotypes:scaling-trigger;
         }
 
-        leaf ns-service-primitive-name-ref {
-          description "Reference to the NS service primitive";
+        leaf ns-config-primitive-name-ref {
+          description "Reference to the NS primitive";
           type leafref {
-            path "../../../service-primitive/name";
+            path "../../../ns-configuration/config-primitive/name";
           }
         }
       }
@@ -555,24 +555,7 @@ module nsd-base
     uses manotypes:ip-profile-list;
 
     container ns-configuration {
-      uses manotypes:ns-configuration;
-    }
-
-    list initial-service-primitive {
-      description
-        "Initial set of service primitives for NSD.";
-      key "seq";
-
-      uses manotypes:event-config;
-    }
-
-    list terminate-service-primitive {
-      description
-        "Set of service primitives during
-         termination for NSD.";
-      key "seq";
-
-      uses manotypes:event-config;
+      uses manotypes:vca-configuration;
     }
 
     uses manotypes:input-parameter-xpath;

@@ -555,6 +555,9 @@ module nsd-base
     uses manotypes:ip-profile-list;
 
     container ns-configuration {
+      description
+        "Information about NS configuration.";
+
       uses manotypes:vca-configuration;
     }
 

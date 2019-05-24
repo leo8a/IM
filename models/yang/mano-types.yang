@@ -297,19 +297,10 @@ module mano-types
     }
   }
 
-  grouping ns-configuration {
-    description
-        "Information about NS configuration. Note:
-         In the future this should be equivalent to vca-configuration
-         grouping.";
-
-    uses manotypes:configuration-method;
-  }
-
   grouping vca-configuration {
     description
-        "Information about the VNF or VDU configuration. Note:
-         If the NS contains multiple instances of the
+        "Common information in the descriptors for NS, VNF or VDU configuration.
+         Note: If the NS contains multiple instances of the
          same VNF or VDU, each instance could have a different
          configuration.";
 

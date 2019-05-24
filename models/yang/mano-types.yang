@@ -297,6 +297,34 @@ module mano-types
     }
   }
 
+  grouping vca-config-access {
+
+    container config-access {
+
+      description
+        "Indicates the way to access to the xNF or xDU for VCA configuration.
+         For the moment there is a single way (ssh-access).";
+
+      container ssh-access {
+
+        description
+          "If the xNF requires ssh and this parameter is set, SSH keys
+          will be injected so that VCA can configure the xNF or xDU via ssh.";
+
+        leaf required  {
+          description "whether ssh access is needed or not";
+          type boolean;
+          default false;
+        }
+
+        leaf default-user {
+          description "Default user for ssh";
+          type string;
+        }
+      }
+    }
+  } // END - grouping vca-config-access
+
   grouping vca-configuration {
     description
         "Common information in the descriptors for NS, VNF or VDU configuration.

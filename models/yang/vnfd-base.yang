@@ -176,6 +176,7 @@ module vnfd-base
 
       container vnf-configuration {
         uses manotypes:vca-configuration;
+        uses manotypes:vca-config-access;
       }
 
       leaf operational-status {
@@ -460,6 +461,7 @@ module vnfd-base
 
         container vdu-configuration {
           uses manotypes:vca-configuration;
+          uses manotypes:vca-config-access;
         }
 
         list monitoring-param {

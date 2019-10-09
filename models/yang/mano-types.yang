@@ -176,7 +176,7 @@ module mano-types
       description
           "Name of the configuration primitive.";
       type string;
-      mandatory "true";
+      mandatory true;
     }
 
     leaf user-defined-script {

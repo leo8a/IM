@@ -27,6 +27,6 @@ node {
                            params.GERRIT_BRANCH,
                            params.GERRIT_REFSPEC,
                            params.GERRIT_PATCHSET_REVISION,
-                           params.TEST_INSTALL,
+                           false
                            params.ARTIFACTORY_SERVER)
 }

@@ -108,4 +108,4 @@ deps:
 	$(Q)cp -n ~/.m2/settings.xml{,.orig} ; wget -q -O - https://raw.githubusercontent.com/opendaylight/odlparent/master/settings.xml > ~/.m2/settings.xml
 
 clean:
-	$(Q)rm -rf dist osm_im.egg-info deb deb_dist *.gz yang2swagger $(OUT_DIR) $(TREES_DIR)
+	$(Q)rm -rf dist osm_im.egg-info deb deb_dist *.gz osm-imdocs* yang2swagger $(OUT_DIR) $(TREES_DIR)

@@ -33,11 +33,8 @@ class Install_osm_im(install):
         self.pipinstall('pyang')
         self.pipinstall('pyangbind')
         import pyangbind
-        print("Creating dir {}/{} for python artifacts".format(os.getcwd(), self.im_dir))
+        print("Using dir {}/{} for python artifacts".format(os.getcwd(), self.im_dir))
         path = "{}/{}".format(os.getcwd(), self.im_dir)
-        if not os.path.exists(path):
-            os.makedirs(path)
-        open("{}/{}/__init__.py".format(os.getcwd(), self.im_dir), 'a').close()
         for files_item in ['vnfd', 'nsd', 'nst']:
             protoc_command = ["pyang",
                               "-Werror",

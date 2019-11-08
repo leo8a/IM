@@ -25,7 +25,7 @@ import pyangbind.lib.pybindJSON as pybindJSON
 class ValidationException(Exception):
     pass
 
-class Validation():
+class Validation:
 
     def pyangbind_validation(self, item, data, force=False):
         '''
@@ -55,15 +55,15 @@ class Validation():
         try:
             data = yaml.safe_load(descriptor)
         except Exception as e:
-            raise ValidationException("Error in YAML validation. Not a proper YAML file")
-        if 'vnfd:vnfd-catalog' in data:
+            raise ValidationException("Error in YAML validation. Not a proper YAML file: {}".format(e))
+        if 'vnfd:vnfd-catalog' in data or 'vnfd-catalog' in data:
             item = "vnfd"
-        elif 'nsd:nsd-catalog' in data:
+        elif 'nsd:nsd-catalog' in data or 'nsd-catalog' in data:
             item = "nsd"
         elif 'nst' in data:
             item = "nst"
         else:
-            raise ValidationException("Error in YAML validation. Not possible to determine the type of descriptor in the first line. Expected values: vnfd:vnfd-catalog, nsd:nsd-catalog, nst")
+            raise ValidationException("Error in YAML validation. Not possible to determine the type of descriptor in the first line. Expected values: vnfd:vnfd-catalog, vnfd-catalog, nsd:nsd-catalog, nsd-catalog, nst")
 
         return item, data
 

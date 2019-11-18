@@ -614,6 +614,118 @@ module vnfd-base
         }
       }
 
+      list kdu {
+        description "List of K8s Deployment Units";
+        key "name";
+
+        leaf name {
+          description "Unique name for the KDU";
+          type string;
+        }
+
+        leaf description {
+            description "Description of the KDU.";
+            type string;
+        }
+
+        container kdu-configuration {
+          uses manotypes:vca-configuration;
+          uses manotypes:vca-config-access;
+
+          leaf-list blacklist-config-primitive {
+            description
+              "List of blacklisted config primitives from the list of
+              default kdu config primitives";
+
+            type enumeration {
+              enum upgrade;
+              enum rollback;
+            }
+
+          }
+
+        }
+
+        choice kdu-model {
+          description
+            "Indicates the KDU model, either as a helm-chart or as a juju-bundle.";
+
+          case helm-chart {
+            leaf helm-chart {
+              description
+                "Helm chart that models the KDU, in any of the following ways:
+                 - <helm-repo>/<helm-chart>
+                 - <helm-chart folder under k8s_models folder in the package>
+                 - <helm-chart tgz file (w/ or w/o extension) under k8s_models folder in the package>
+                 - <URL_where_to_fetch_chart>
+                ";
+              type string;
+            }
+          }
+
+          case juju-bundle {
+            leaf juju-bundle {
+              description
+                "Juju bundle that models the KDU, in any of the following ways:
+                 - <juju-repo>/<juju-bundle>
+                 - <juju-bundle folder under k8s_models folder in the package>
+                 - <juju-bundle tgz file (w/ or w/o extension) under k8s_models folder in the package>
+                 - <URL_where_to_fetch_juju_bundle>
+                ";
+              type string;
+            }
+          }
+        }
+
+      }
+
+      container k8s-cluster {
+        leaf-list version {
+          description
+            "List of supported K8s versions.
+            The cluster where the KDUs will be deployed will have to match
+            one of these versions.";
+
+          type string;
+        }
+
+        leaf-list cni {
+          description
+            "List of supported CNI plugins.
+            The cluster where the KDUs will be deployed will have to use
+            one of these CNI plugins.";
+
+          type enumeration {
+            enum calico;
+            enum flannel;
+            enum multus;
+          }
+        }
+
+        list nets {
+          description
+            "List of required networks in the K8s cluster.
+            The cluster where the KDUs will be deployed will have to use
+            one of these CNI plugins.";
+
+          key "id";
+
+          leaf id {
+            description "Internal identifier for the K8s cluster network in this VNF";
+            type string;
+          }
+
+          leaf external-connection-point-ref {
+            description
+              "Leaf Ref to the particular external connection point";
+            type leafref {
+              path "../../../connection-point/name";
+            }
+          }
+
+        }
+      }
+
       list vdu-dependency {
         description
             "List of VDU dependencies.";

@@ -894,4 +894,18 @@ module nsd-base
     uses manotypes:monitoring-param-ui-data;
     uses manotypes:monitoring-param-aggregation;
   } // monitoring-param-common
+
+  grouping vendor-specifics-param-common {
+    description
+      "List of vendor specific parameters";
+
+    leaf name {
+      type string;
+    }
+
+    leaf action {
+      type string;
+    }
+
+  } // vendor-specifics-param-common
 }

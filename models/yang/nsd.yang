@@ -251,4 +251,19 @@ module nsd
       uses nsd-monitoring-param;
     }
   }
+
+  container vendor-specific {
+
+    leaf schema-version {
+      description "Schema version for the NSD. If unspecified, it assumes v3.0";
+      type string;
+      default "v3.0";
+    }
+
+    list vendor-specific {
+      key name;
+
+      uses nsd-base:vendor-specifics-param-common;
+    }
+  }
 }

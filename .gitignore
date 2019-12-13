@@ -19,7 +19,6 @@
 
 #EXTRA FOLDERS
 venv
-build
 
 #Generated folders when building the deb package locally
 debian/osm-imdocs.install

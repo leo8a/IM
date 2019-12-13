@@ -1,6 +1,6 @@
 
 /*
- * 
+ *
  *   Copyright 2017 RIFT.IO Inc
  *
  *   Licensed under the Apache License, Version 2.0 (the "License");
@@ -123,6 +123,11 @@ module nsd-base
 
     leaf vendor {
       description "Vendor of the NSD.";
+      type string;
+    }
+
+    leaf vendor-specific {
+      description "Vendor-specific info of the NSD.";
       type string;
     }
 
